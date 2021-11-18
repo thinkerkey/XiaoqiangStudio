@@ -19,6 +19,11 @@ class View():
 
         self.canvas_view  = self.canvas.central_widget.add_view()
 
+        self.canvas_view.camera = 'turntable'
+        self.canvas_view.camera.fov = 30
+        self.canvas.show()
+        vispy.scene.visuals.GridLines(parent=self.canvas_view.scene)
+        axis = visuals.XYZAxis(parent=self.canvas_view.scene)
 
         self.ui.groupbox_vis3d.layout().addWidget(self.canvas.native)
         self.spliter_dict = {}
@@ -55,12 +60,9 @@ class View():
     def set_point_cloud(self, points):
         self.pointcloud_vis = visuals.Markers()
         self.pointcloud_vis.set_gl_state('translucent', depth_test=False)
-        self.pointcloud_vis.set_data(points, edge_color=None, face_color=(1, 1, 1, 1), size = 2)
+        self.pointcloud_vis.set_data(points, edge_color=None, face_color=(0, 1, 0, 1), size = 3)
         self.canvas_view.add(self.pointcloud_vis)
-        self.canvas_view.camera = 'turntable'  # or try 'arcball'
 
-        # add a colored 3D axis for orientation
-        axis = visuals.XYZAxis(parent=self.canvas_view.scene)
 
 
     def show(self):
