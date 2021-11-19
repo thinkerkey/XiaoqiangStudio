@@ -8,18 +8,23 @@ class Controller():
     def __init__(self) -> None:
         self.app = QApplication([])
         self.view = View()
+        apply_stylesheet(self.app, theme='default.xml')
         self.index = 0
-
         self.signal_connect()
 
     def run(self):
-        apply_stylesheet(self.app, theme='dark_teal.xml')
+
         self.view.show()
         self.app.exec_()
 
-
+    
     def signal_connect(self):
+
         self.view.ui.pushButton.clicked.connect(self.button_clicked)
+        self.view.ui.menu_theme.triggered.connect(self.change_theme)
+
+    def change_theme(self, theme):
+        apply_stylesheet(self.app, theme='%s.xml'%(theme.text()))
 
     def button_clicked(self):
         curr_bin_path = osp.join("data/point_cloud", str(self.index).zfill(6) + ".bin")

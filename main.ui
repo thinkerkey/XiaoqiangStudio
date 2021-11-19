@@ -24,7 +24,7 @@
        <item>
         <widget class="QPushButton" name="pushButton">
          <property name="text">
-          <string>PushButton</string>
+          <string>按钮</string>
          </property>
         </widget>
        </item>
@@ -107,8 +107,74 @@
      <height>31</height>
     </rect>
    </property>
+   <widget class="QMenu" name="menu">
+    <property name="title">
+     <string>主页</string>
+    </property>
+   </widget>
+   <widget class="QMenu" name="menu_theme">
+    <property name="title">
+     <string>主题</string>
+    </property>
+    <addaction name="actionDefault"/>
+    <addaction name="actionDark"/>
+    <addaction name="actionDark_red"/>
+    <addaction name="actionDark_purple"/>
+    <addaction name="actionDark_lightgreen"/>
+    <addaction name="actionDark_amber"/>
+    <addaction name="actionLight_blue"/>
+    <addaction name="actionLight_cyan"/>
+    <addaction name="actionLight_lightgreen"/>
+   </widget>
+   <addaction name="menu"/>
+   <addaction name="menu_theme"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
+  <action name="actionDefault">
+   <property name="text">
+    <string>default</string>
+   </property>
+  </action>
+  <action name="actionDark">
+   <property name="text">
+    <string>dark_teal</string>
+   </property>
+  </action>
+  <action name="actionDark_red">
+   <property name="text">
+    <string>dark_red</string>
+   </property>
+  </action>
+  <action name="actionDark_purple">
+   <property name="text">
+    <string>dark_purple</string>
+   </property>
+  </action>
+  <action name="actionDark_lightgreen">
+   <property name="text">
+    <string>dark_lightgreen</string>
+   </property>
+  </action>
+  <action name="actionDark_amber">
+   <property name="text">
+    <string>dark_amber</string>
+   </property>
+  </action>
+  <action name="actionLight_blue">
+   <property name="text">
+    <string>light_blue</string>
+   </property>
+  </action>
+  <action name="actionLight_cyan">
+   <property name="text">
+    <string>light_cyan</string>
+   </property>
+  </action>
+  <action name="actionLight_lightgreen">
+   <property name="text">
+    <string>light_lightgreen</string>
+   </property>
+  </action>
  </widget>
  <resources/>
  <connections/>

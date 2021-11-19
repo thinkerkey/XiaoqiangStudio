@@ -21,7 +21,10 @@ class View():
 
         self.canvas_view.camera = 'turntable'
         self.canvas_view.camera.fov = 30
-        self.canvas.show()
+        self.pointcloud_vis = visuals.Markers(parent=self.canvas_view.scene)
+        self.pointcloud_vis.set_gl_state('translucent', depth_test=False)
+        # self.canvas.show()
+        self.canvas_view.add(self.pointcloud_vis)
         vispy.scene.visuals.GridLines(parent=self.canvas_view.scene)
         axis = visuals.XYZAxis(parent=self.canvas_view.scene)
 
@@ -40,7 +43,7 @@ class View():
                                 self.ui.tabwidget_main],
                             [4, 2],
                             self.ui.groupbox_mainwindow.layout())
-
+        print("done!")
 
     def set_qspilter(self, spliter_name,
                             spliter_dir,
@@ -58,10 +61,7 @@ class View():
         layout_set.addWidget(self.spliter_dict[spliter_name])
 
     def set_point_cloud(self, points):
-        self.pointcloud_vis = visuals.Markers()
-        self.pointcloud_vis.set_gl_state('translucent', depth_test=False)
         self.pointcloud_vis.set_data(points, edge_color=None, face_color=(0, 1, 0, 1), size = 3)
-        self.canvas_view.add(self.pointcloud_vis)
 
 
 
