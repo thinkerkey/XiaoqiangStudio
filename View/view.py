@@ -10,7 +10,7 @@ class View():
         mvc模式中的视图部分，本身不包含任何逻辑，仅作界面显示使用
     '''
     def __init__(self):
-        self.ui = QUiLoader().load('main.ui')
+        self.ui = QUiLoader().load('config/main.ui')
         self.canvas = vispy.scene.SceneCanvas(keys='interactive', show=True)
         # grid = self.canvas.central_widget.add_grid(spacing=0, bgcolor='black',
         #                                   border_color='k')

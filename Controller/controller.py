@@ -1,5 +1,5 @@
-from point_cloud_utils import *
-from view import View
+from Utils.point_cloud_utils import *
+from View.view import View
 from qt_material import apply_stylesheet
 from PySide2.QtWidgets import QApplication
 import os.path as osp
@@ -17,7 +17,7 @@ class Controller():
         self.view.show()
         self.app.exec_()
 
-    
+
     def signal_connect(self):
 
         self.view.ui.pushButton.clicked.connect(self.button_clicked)
@@ -34,6 +34,10 @@ class Controller():
         self.view.set_point_cloud(curr_points)
 
         self.index += 1
+
+
+    def sigint_handler(self, signum = None, frame = None):
+        pass
 
 
 
