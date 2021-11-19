@@ -2,7 +2,7 @@ import os
 import struct
 import numpy as np
 import open3d as o3d
-from navi_state import GPSstate, NaviState, CANstate
+from .navi_state import GPSstate, NaviState, CANstate
 from scipy.spatial.transform import Rotation
 
 def crop_cloud_height(points, min=-0.5, max=4, return_idx=False):
