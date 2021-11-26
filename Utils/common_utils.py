@@ -1,7 +1,6 @@
 from os import stat_result
 from PySide2.QtWidgets import QFileDialog
 import json
-# import ujson as json
 import re
 
 
@@ -18,7 +17,7 @@ NORMAL = 1
 
 info_color_list = [
     "#ff0000",
-    "#000000",
+    "#00ff00",
 ]
 
 KEYPRIVATE = "w09f*1l.kl~7tl-t0hmc-eizlsk3jo*+b72wjz*!"

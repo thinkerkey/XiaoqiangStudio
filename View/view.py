@@ -4,6 +4,8 @@ from PySide2.QtCore import QTimer, Qt
 import vispy.scene
 from vispy.scene import visuals
 import numpy as np
+import time
+from Utils.common_utils import *
 
 class View():
     '''
@@ -43,7 +45,6 @@ class View():
                                 self.ui.tabwidget_main],
                             [4, 2],
                             self.ui.groupbox_mainwindow.layout())
-        print("done!")
 
     def set_qspilter(self, spliter_name,
                             spliter_dir,
@@ -63,6 +64,12 @@ class View():
     def set_point_cloud(self, points):
         self.pointcloud_vis.set_data(points, edge_color=None, face_color=(0, 1, 0, 1), size = 3)
 
+
+    def display_append_msg_list(self, msg):
+        self.ui.textedit_log_info.append(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
+        for m in msg:
+            self.ui.textedit_log_info.append('<span style=\" color: %s;\">%s</span>'%(info_color_list[m[0]],m[1]))
+        self.ui.textedit_log_info.verticalScrollBar().setValue(self.ui.textedit_log_info.verticalScrollBar().maximum())
 
 
     def show(self):
