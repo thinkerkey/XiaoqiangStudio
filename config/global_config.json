@@ -1,4 +1,43 @@
 {
-    "theme": "default"
+    "theme": "default",
+    "pcd_path": "/home/uisee/ceph/UCLF_U02P/car_10/pcd_write/lidar_20210913134523",
+    "is_bin": 0,
 
+    "label_path": "/home/uisee/ceph/UCLF_U02P/car_10/pcd_write/lidar_20210913134523/dl_result",
+    "label_path2": "data/label2",
+
+    "img_path": "/home/uisee/ceph/UCLF_U02P/car_10/dump_images_1/image_capturer_0",
+    "img_ext": ".tiff",
+
+    "start_idx": 0,
+
+    "compare_mode": 0,
+
+    "draw_box": 1,
+    "draw_obj_vel": 0,
+    "draw_car_model": 0,
+
+    "draw_img": 1,
+    "draw_global_cloud": 0,
+
+    "global_cloud_path": "data/plane",
+    "is_global_cloud_bin": 0,
+    "loc_source": "navi",
+
+    "label_map": {
+        "0": "car",
+        "1": "car",
+        "2": "truck",
+        "3": "bus",
+        "4": "bicycle",
+        "5": "tricycle",
+        "6": "pedestrian",
+
+        "7": "barrier",
+        "8": "construction_vehicle",
+        "9": "motorcycle",
+        "10": "traffic_cone",
+        "11": "trailer"
+
+    }
 }
