@@ -15,7 +15,7 @@ class Controller():
         self.model = Model()
         # for update log info
         self.Timer = QTimer()
-        self.view.add_topic_type(self.model.global_cfg["has_sub_topic"].keys())
+        self.view.add_topic_type(self.model.global_cfg["base_data_type"].keys())
         self.Timer.start(50)
         self.Timer.timeout.connect(self.monitor_timer)
 
@@ -32,7 +32,7 @@ class Controller():
 
 
     def signal_connect(self):
-        self.ui.button_add_topic.clicked.connect(self.add_topic)
+        self.view.ui.button_add_topic.clicked.connect(self.add_topic)
         self.view.ui.menu_theme.triggered.connect(self.change_theme)
 
 

@@ -54,7 +54,7 @@ class Canvas(scene.SceneCanvas):
         self.view_panel[view_name] = self.grid.add_view(row=0, col=0, margin=10, border_color=(1, 1, 1))
         self.view_panel[view_name].camera = 'turntable' # arcball
         self.view_panel[view_name].camera.fov = 30
-        vispy.scene.visuals.GridLines(parent=self.view_panel[view_name].scene)
+        vispy.scene.visuals.GridLines(color = 'w',parent=self.view_panel[view_name].scene)
 
 
     def add_2dview(self, view_name = "2d"):

@@ -12,6 +12,22 @@
             "bbox1": "bboxes"
         }
     },
+    "base_data_type": {
+        "point": {
+            "show": 1,
+            "color": "#00ff00"
+        },
+        "image": {
+            "show": 1
+        },
+        "bbox": {
+            "show": 1,
+            "show_box_line": 1,
+            "show_box_surface": 1,
+            "show_id": 0,
+            "show_vel": 0
+        }
+    },
     "label_map": {
         "0": "car",
         "1": "car",
