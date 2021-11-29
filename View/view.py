@@ -1,9 +1,6 @@
 from PySide2.QtUiTools import QUiLoader
 from PySide2.QtWidgets import QApplication, QSplitter
 from PySide2.QtCore import QTimer, Qt
-import vispy.scene
-from vispy.scene import visuals
-import numpy as np
 import time
 from Utils.common_utils import *
 from View.uviz import Canvas
@@ -54,12 +51,21 @@ class View():
             self.spliter_dict[spliter_name].setStretchFactor(i, f)
         layout_set.addWidget(self.spliter_dict[spliter_name])
 
+    def add_topic_type(self, type_list):
+        self.ui.combox_topic_type.clear()
+        for i in type_list:
+            self.ui.combox_topic_type.addItem(i)
+
 
     def display_append_msg_list(self, msg):
         self.ui.textedit_log_info.append(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
         for m in msg:
-            self.ui.textedit_log_info.append('<span style=\" color: %s;\">%s</span>'%(info_color_list[m[0]],m[1]))
-        self.ui.textedit_log_info.verticalScrollBar().setValue(self.ui.textedit_log_info.verticalScrollBar().maximum())
+            self.ui.textedit_log_info.append(
+                '<span style=\" color: %s;\">%s</span>'%(info_color_list[m[0]],m[1])
+                )
+        self.ui.textedit_log_info.verticalScrollBar().setValue(
+                self.ui.textedit_log_info.verticalScrollBar().maximum()
+            )
 
 
     def show(self):

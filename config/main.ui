@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1101</width>
-    <height>746</height>
+    <width>1118</width>
+    <height>762</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -20,12 +20,63 @@
       <property name="title">
        <string>Displays</string>
       </property>
-      <layout class="QVBoxLayout" name="verticalLayout_2">
+      <layout class="QVBoxLayout" name="verticalLayout_2" stretch="10,1">
        <item>
-        <widget class="QPushButton" name="pushButton">
-         <property name="text">
-          <string>按钮</string>
+        <widget class="QScrollArea" name="scrollArea">
+         <property name="widgetResizable">
+          <bool>true</bool>
          </property>
+         <widget class="QWidget" name="scrollAreaWidgetContents">
+          <property name="geometry">
+           <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>259</width>
+            <height>588</height>
+           </rect>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_6">
+           <item>
+            <widget class="QTreeWidget" name="treeWidget">
+             <column>
+              <property name="text">
+               <string>Topic</string>
+              </property>
+             </column>
+             <column>
+              <property name="text">
+               <string>info</string>
+              </property>
+             </column>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </widget>
+       </item>
+       <item>
+        <widget class="QFrame" name="frame">
+         <property name="frameShape">
+          <enum>QFrame::StyledPanel</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Raised</enum>
+         </property>
+         <layout class="QHBoxLayout" name="horizontalLayout_3">
+          <item>
+           <widget class="QComboBox" name="combox_topic_type"/>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="lineEdit"/>
+          </item>
+          <item>
+           <widget class="QPushButton" name="button_add_topic">
+            <property name="text">
+             <string>Add</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </widget>
        </item>
       </layout>
@@ -36,7 +87,7 @@
       <property name="title">
        <string>Main window</string>
       </property>
-      <layout class="QVBoxLayout" name="verticalLayout_3" stretch="5,2">
+      <layout class="QVBoxLayout" name="verticalLayout_3" stretch="5,0">
        <item>
         <widget class="QGroupBox" name="groupbox_vis3d">
          <property name="title">
@@ -60,11 +111,6 @@
            </item>
           </layout>
          </widget>
-         <widget class="QWidget" name="tab_4">
-          <attribute name="title">
-           <string>Tab 2</string>
-          </attribute>
-         </widget>
         </widget>
        </item>
       </layout>
@@ -81,10 +127,20 @@
        </attribute>
        <layout class="QVBoxLayout" name="verticalLayout_4">
         <item>
-         <widget class="QPushButton" name="pushButton_2">
-          <property name="text">
-           <string>PushButton</string>
+         <widget class="QScrollArea" name="scrollArea_2">
+          <property name="widgetResizable">
+           <bool>true</bool>
           </property>
+          <widget class="QWidget" name="scrollAreaWidgetContents_2">
+           <property name="geometry">
+            <rect>
+             <x>0</x>
+             <y>0</y>
+             <width>176</width>
+             <height>638</height>
+            </rect>
+           </property>
+          </widget>
          </widget>
         </item>
        </layout>
@@ -93,6 +149,25 @@
        <attribute name="title">
         <string>Tab 2</string>
        </attribute>
+       <layout class="QVBoxLayout" name="verticalLayout_5">
+        <item>
+         <widget class="QScrollArea" name="scrollArea_3">
+          <property name="widgetResizable">
+           <bool>true</bool>
+          </property>
+          <widget class="QWidget" name="scrollAreaWidgetContents_3">
+           <property name="geometry">
+            <rect>
+             <x>0</x>
+             <y>0</y>
+             <width>176</width>
+             <height>638</height>
+            </rect>
+           </property>
+          </widget>
+         </widget>
+        </item>
+       </layout>
       </widget>
      </widget>
     </item>
@@ -103,7 +178,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1101</width>
+     <width>1118</width>
      <height>31</height>
     </rect>
    </property>

@@ -38,14 +38,14 @@ class Canvas(scene.SceneCanvas):
     def create_view(self, view_type, view_name):
         create_method = getattr(self, view_type, None)
         if create_method is None:
-            print("ERROR, 无此类型视图面板")
+            raise RuntimeError('无此类型视图面板')
         else:
             create_method(view_name)
 
     def creat_vis(self, vis_type, vis_name, parent_view):
         create_method = getattr(self, vis_type, None)
         if create_method is None:
-            print("ERROR, 无此类型视图面板")
+            raise RuntimeError('无此类型视图面板')
         else:
             create_method(vis_name, parent_view)
 

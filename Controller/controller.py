@@ -8,21 +8,21 @@ from Utils.common_utils import *
 from log_sys import *
 from PySide2.QtCore import QTimer, Qt
 
-
 class Controller():
     def __init__(self) -> None:
         self.app = QApplication([])
         self.view = View()
         self.model = Model()
-
         # for update log info
         self.Timer = QTimer()
+        self.view.add_topic_type(self.model.global_cfg["has_sub_topic"].keys())
         self.Timer.start(50)
         self.Timer.timeout.connect(self.monitor_timer)
 
         self.index = 0
         self.signal_connect()
         send_log_msg(NORMAL, "欢迎使用vis studio~")
+        self.model.start()
 
     def run(self):
         apply_stylesheet(self.app, theme=self.model.global_cfg['theme'])
@@ -32,8 +32,12 @@ class Controller():
 
 
     def signal_connect(self):
-        self.view.ui.pushButton.clicked.connect(self.button_clicked)
+        self.ui.button_add_topic.clicked.connect(self.add_topic)
         self.view.ui.menu_theme.triggered.connect(self.change_theme)
+
+
+    def add_topic(self):
+        pass
 
     def change_theme(self, theme):
         curr_theme = theme.text() + ".xml"
