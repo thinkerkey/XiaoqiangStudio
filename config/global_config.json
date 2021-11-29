@@ -1,5 +1,5 @@
 {
-    "theme": "dark_teal.xml",
+    "theme": "default.xml",
     "pcd_path": "/home/uisee/ceph/UCLF_U02P/car_10/pcd_write/lidar_20210913134523",
     "is_bin": 0,
     "label_path": "/home/uisee/ceph/UCLF_U02P/car_10/pcd_write/lidar_20210913134523/dl_result",

@@ -8,7 +8,7 @@ import os
 def main():
     _log_sys_init()
     obj = Controller()
-    signal.signal(signal.SIGINT,obj.sigint_handler)
+    signal.signal(signal.SIGINT, obj.sigint_handler)
     obj.run()
 
 
