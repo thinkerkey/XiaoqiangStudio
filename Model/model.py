@@ -20,10 +20,15 @@ class Model(QThread):
     def unsub(self, topic):
         self.subnode.unsub(topic)
 
+    def pub(self, topoic, data):
+        self.subnode.pub(topoic, data)
+
     def save_global_cfg_when_close(self):
         write_json(self.global_cfg, self.global_cfg_path)
 
     def run(self):
-        self.subnode.subspin()
+        while True:
+            self.subnode.subspin()
+            time.sleep(self.global_cfg["update_sec"])
 
 

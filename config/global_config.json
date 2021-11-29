@@ -1,6 +1,6 @@
 {
     "theme": "default.xml",
-    "update_sec": 0.05,
+    "update_sec": 0.001,
     "has_sub_topic": {
         "point": {
             "points1": "points"
@@ -15,7 +15,8 @@
     "base_data_type": {
         "point": {
             "show": 1,
-            "color": "#00ff00"
+            "color": "#00ff00",
+            "size": 1
         },
         "image": {
             "show": 1

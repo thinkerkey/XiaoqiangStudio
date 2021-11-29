@@ -67,6 +67,16 @@ class View():
                 self.ui.textedit_log_info.verticalScrollBar().maximum()
             )
 
+    def get_sub_topic_text(self):
+        return self.ui.need_sub_text.text()
+
+    def get_data_type_text(self):
+        return self.ui.combox_topic_type.currentText()
+
+    def add_tree_widget(self, data_dict):
+        pass
+        # for key, result
+        # tree_widget_for_display
 
     def show(self):
         self.ui.show()

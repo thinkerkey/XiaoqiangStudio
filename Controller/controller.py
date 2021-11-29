@@ -1,3 +1,6 @@
+from time import sleep
+
+import numpy
 from Utils.point_cloud_utils import *
 from View.view import View
 from Model.model import Model
@@ -21,34 +24,55 @@ class Controller():
 
         self.index = 0
         self.signal_connect()
-        send_log_msg(NORMAL, "欢迎使用vis studio~")
+        send_log_msg(NORMAL, "欢迎来到 Xiaoqiang Studio~")
         self.model.start()
 
     def run(self):
         apply_stylesheet(self.app, theme=self.model.global_cfg['theme'])
         self.view.show()
+        self.model.quit()
         self.app.exec_()
         self.model.save_global_cfg_when_close()
 
 
     def signal_connect(self):
+        self.view.ui.pushButton.clicked.connect(self.button_clicked)
         self.view.ui.button_add_topic.clicked.connect(self.add_topic)
         self.view.ui.menu_theme.triggered.connect(self.change_theme)
 
 
     def add_topic(self):
-        pass
+        need_topic = self.view.get_sub_topic_text()
+        if need_topic == "":
+            send_log_msg(ERROR, "请填写需要订阅的话题")
+        else:
+            fun_name = self.view.get_data_type_text() + "_callback"
+            callback_fun = getattr(self, fun_name, None)
+            self.model.sub(need_topic, callback_fun)
+            send_log_msg(NORMAL, "已订阅Topic: %s"%need_topic)
+
+    def point_callback(self, msg, topic):
+        send_log_msg(NORMAL, "收到来自%s的point msg"%topic)
+        self.view.canvas.draw_point_cloud("point_cloud", numpy.array(msg["points"]))
+        print(msg.keys())
+
+    def image_callback(self, msg, topic):
+        send_log_msg(NORMAL, "收到来自%s的image msg"%topic)
+
+    def bbox_callback(self, msg, topic):
+        send_log_msg(NORMAL, "收到来自%s的bbox msg"%topic)
 
     def change_theme(self, theme):
         curr_theme = theme.text() + ".xml"
         self.model.global_cfg["theme"] = curr_theme
         apply_stylesheet(self.app, theme=curr_theme)
 
+    index = 0
     def button_clicked(self):
         curr_bin_path = osp.join("data/point_cloud", str(self.index).zfill(6) + ".bin")
         print(curr_bin_path)
         curr_points = read_bin(curr_bin_path)[0]
-        self.view.set_point_cloud(curr_points)
+        self.model.pub("points", {"points":curr_points.tolist()})
         self.index += 1
 
     def monitor_timer(self):
