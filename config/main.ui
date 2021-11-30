@@ -37,7 +37,7 @@
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_6">
            <item>
-            <widget class="QTreeWidget" name="treeWidget">
+            <widget class="QTreeWidget" name="tree_widget_for_display">
              <column>
               <property name="text">
                <string>Topic</string>
@@ -45,7 +45,7 @@
              </column>
              <column>
               <property name="text">
-               <string>info</string>
+               <string>Type</string>
               </property>
              </column>
             </widget>
@@ -190,8 +190,8 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>170</width>
-             <height>638</height>
+             <width>98</width>
+             <height>28</height>
             </rect>
            </property>
           </widget>

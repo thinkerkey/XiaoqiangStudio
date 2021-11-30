@@ -39,17 +39,29 @@ class Controller():
         self.view.ui.pushButton.clicked.connect(self.button_clicked)
         self.view.ui.button_add_topic.clicked.connect(self.add_topic)
         self.view.ui.menu_theme.triggered.connect(self.change_theme)
+        self.view.ui.tree_widget_for_display.itemChanged.connect(self.display_setting_changed)
+        self.view.ui.tree_widget_for_display.clicked.connect(self.display_clicked)
 
+    def display_clicked(self, item):
+        print(item)
+
+    def display_setting_changed(self, item, col):
+        print(item, col)
 
     def add_topic(self):
         need_topic = self.view.get_sub_topic_text()
         if need_topic == "":
             send_log_msg(ERROR, "请填写需要订阅的话题")
         else:
-            fun_name = self.view.get_data_type_text() + "_callback"
+            data_type = self.view.get_data_type_text()
+            fun_name = data_type + "_callback"
             callback_fun = getattr(self, fun_name, None)
             self.model.sub(need_topic, callback_fun)
             send_log_msg(NORMAL, "已订阅Topic: %s"%need_topic)
+            self.view.add_tree_widget(
+                    self.model.global_cfg['base_data_type'][data_type],
+                    data_type,
+                    need_topic)
 
     def point_callback(self, msg, topic):
         send_log_msg(NORMAL, "收到来自%s的point msg"%topic)
