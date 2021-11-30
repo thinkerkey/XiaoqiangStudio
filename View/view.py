@@ -1,7 +1,7 @@
 from selectors import SelectorKey
 from PySide2.QtUiTools import QUiLoader
 from PySide2.QtWidgets import QApplication, QSplitter, QTreeWidgetItem
-from PySide2.QtCore import QTimer, Qt
+from PySide2.QtCore import QTimer, Qt, QModelIndex
 import time
 from Utils.common_utils import *
 from View.uviz import Canvas

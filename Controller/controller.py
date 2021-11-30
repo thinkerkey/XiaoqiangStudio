@@ -41,12 +41,15 @@ class Controller():
         self.view.ui.menu_theme.triggered.connect(self.change_theme)
         self.view.ui.tree_widget_for_display.itemChanged.connect(self.display_setting_changed)
         self.view.ui.tree_widget_for_display.clicked.connect(self.display_clicked)
+        self.view.ui.need_sub_text.returnPressed.connect(self.add_topic)
 
     def display_clicked(self, item):
-        print(item)
+        # print(item.parent())
+        pass
 
     def display_setting_changed(self, item, col):
-        print(item, col)
+        # print(item, col)
+        pass
 
     def add_topic(self):
         need_topic = self.view.get_sub_topic_text()
@@ -65,7 +68,7 @@ class Controller():
 
     def point_callback(self, msg, topic):
         send_log_msg(NORMAL, "收到来自%s的point msg"%topic)
-        self.view.canvas.draw_point_cloud("point_cloud", numpy.array(msg["points"]))
+        self.view.canvas.draw_point_cloud("point_cloud", msg["points"])
         print(msg.keys())
 
     def image_callback(self, msg, topic):
@@ -81,10 +84,14 @@ class Controller():
 
     index = 0
     def button_clicked(self):
-        curr_bin_path = osp.join("data/point_cloud", str(self.index).zfill(6) + ".bin")
+        curr_index_str = str(self.index).zfill(6)
+        curr_bin_path = osp.join("data/point_cloud", curr_index_str + ".bin")
+        curr_label_path = osp.join("data/bbox_track", curr_index_str + ".txt")
+        curr_image_path = osp.join("data/image_CAM_FRONT", curr_index_str + ".jpg")
         print(curr_bin_path)
         curr_points = read_bin(curr_bin_path)[0]
-        self.model.pub("points", {"points":curr_points.tolist()})
+        print(type(curr_points))
+        self.model.pub("points", {"points":curr_points})
         self.index += 1
 
     def monitor_timer(self):
