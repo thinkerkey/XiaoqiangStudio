@@ -34,6 +34,21 @@ class Canvas(scene.SceneCanvas):
         self.vis_module = {}
         self.color_map = {}
         self.load_color_map()
+        self.curr_col_image_view = 0
+        self.label_map = {
+                    "0": "car",
+                    "1": "car",
+                    "2": "truck",
+                    "3": "bus",
+                    "4": "bicycle",
+                    "5": "tricycle",
+                    "6": "pedestrian",
+                    "7": "barrier",
+                    "8": "construction_vehicle",
+                    "9": "motorcycle",
+                    "10": "traffic_cone",
+                    "11": "trailer"
+                }
 
     def create_view(self, view_type, view_name):
         create_method = getattr(self, view_type, None)
@@ -58,11 +73,12 @@ class Canvas(scene.SceneCanvas):
 
 
     def add_2dview(self, view_name = "2d"):
-        self.view_panel[view_name] = self.grid.add_view(row=0, col=0, margin=10,
-                                    border_color=(0, 0, 0))
+        self.view_panel[view_name] = self.grid.add_view(row=0, col=self.curr_col_image_view, margin=10,
+                                    border_color=(1, 1, 1))
         self.view_panel[view_name].camera = scene.PanZoomCamera(aspect=1)
         self.view_panel[view_name].camera.flip = (0, 1, 0)
         self.view_panel[view_name].camera.set_range() #FIXME: do not work
+        self.curr_col_image_view += 1
 
     def add_image_vis(self, vis_name, parent_view):
         self.vis_module[vis_name] = scene.visuals.Image(method = 'auto')
@@ -154,10 +170,30 @@ class Canvas(scene.SceneCanvas):
         self.vis_module[vis_name].set_data(pos, width=width, height=length, depth=height,
             face_color=fc, edge_color=ec, rotation=theta)
 
+    def draw_id_vel(self, vis_name, box, show_id = 1, show_vel = 0):
+        if show_id:
+            text, pos, color = self.prepare_box_id_vel(box, show_vel)
+            self.draw_text(vis_name, text, pos, color)
+
     def draw_text(self, vis_name, text, text_pos, text_color):
         self.vis_module[vis_name].text = text
         self.vis_module[vis_name].pos = text_pos
         self.vis_module[vis_name].color = text_color
+
+    def prepare_box_id_vel(self, boxes, draw_box_vel = 0):
+        show_text = []
+        show_text_pos = []
+        show_text_color = []
+        for b in boxes:
+            if draw_box_vel:
+                curr_text =  " [" + str(int(b.id)) + "] " + "v:" + "%.2f"%b.vel + " km/h"
+            else:
+                curr_text =  " [" + str(int(b.id)) + "]"
+            show_text.append(curr_text)
+            show_text_pos.append((b.x, b.y, b.z + 1.5))
+            rgba = self.color_map[self.label_map[b.kind]].rgba
+            show_text_color.append(rgba)
+        return show_text, show_text_pos, show_text_color
 
     def prepare_box_color(self, boxes, lightness_ratio=1.0, opacity=1.0):
         fc = []
@@ -195,7 +231,7 @@ class Canvas(scene.SceneCanvas):
     def prepare_box_color(self, boxes, lightness_ratio=1.0, opacity=1.0):
         fc = []
         for b in boxes:
-            rgba = self.color_map[self.label_map[b.kind]].rgba
+            rgba = self.color_map[self.label_map[str(int(b.kind))]].rgba
             if lightness_ratio != 1.0:
                 rgba[:3] = scale_lightness(rgba[:3], lightness_ratio)
             fc.append(rgba)

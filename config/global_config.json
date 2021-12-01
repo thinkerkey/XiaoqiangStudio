@@ -14,15 +14,15 @@
     },
     "base_data_type": {
         "point": {
-            "show": "\u663e\u793a\u5f00\u5173",
+            "show": 1,
             "color": "#00ff00",
             "size": 2
         },
         "image": {
-            "show": "\u663e\u793a\u5f00\u5173"
+            "show": 1
         },
         "bbox": {
-            "show": "\u663e\u793a\u5f00\u5173",
+            "show": 1,
             "show_box_line": 1,
             "show_box_surface": 1,
             "show_id": 0,

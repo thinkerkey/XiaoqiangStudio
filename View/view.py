@@ -6,6 +6,7 @@ import time
 from Utils.common_utils import *
 from View.uviz import Canvas
 from log_sys import send_log_msg
+from .mov_obj import LabelObj
 
 class View():
     '''
@@ -13,10 +14,18 @@ class View():
     '''
     def __init__(self):
         self.ui = QUiLoader().load('config/main.ui')
-        self.canvas_cfg = parse_json("config/init_canvas_cfg.json")
+        self.canvas_cfg = parse_json("config/init_canvas_cfg3d.json")
+        self.canvas2d_cfg = parse_json("config/init_canvas_cfg2d.json")
+
+
         self.canvas = Canvas()
         self.struct_canvas_init(self.canvas_cfg)
+
+        self.canvas2d = Canvas()
+        # self.struct_canvas2d_init(self.canvas2d_cfg)
+
         self.ui.groupbox_vis3d.layout().addWidget(self.canvas.native)
+        self.ui.horizontalLayout_img.addWidget(self.canvas2d.native)
         self.spliter_dict = {}
         self.set_qspilter("main_form",
                             Qt.Horizontal,
@@ -40,6 +49,13 @@ class View():
             self.canvas.create_view(results["type"], key)
             for vis_key, vis_res in results["vis"].items():
                 self.canvas.creat_vis(vis_res['type'], vis_key, key)
+
+
+    def struct_canvas2d_init(self, cfg_dict:dict):
+        for key, results in cfg_dict.items():
+            self.canvas2d.create_view(results["type"], key)
+            for vis_key, vis_res in results["vis"].items():
+                self.canvas2d.creat_vis(vis_res['type'], vis_key, key)
 
     def set_qspilter(self, spliter_name,
                             spliter_dir,
@@ -92,7 +108,7 @@ class View():
                 # self.child2.setIcon(0,QIcon("../image/image_fajiao.png"))
                 self.child2_tree_item[topic].setText(1, str(result))
                 # self.child2_tree_item[topic].setCheckState(0, Qt.Checked)
-                if result in [0,1]:
+                if result in [0, 1]:
                     if result == 0:
                         self.child2_tree_item[topic].setCheckState(0, Qt.Unchecked)
                     else:
@@ -103,8 +119,32 @@ class View():
                 # tree_widget_for_display
             self.ui.tree_widget_for_display.expandAll()
 
-    def set_point_cloud(self):
-        pass
+    def set_point_cloud(self, points, show, color = "#00ff00", size = 1):
+        if show:
+            self.canvas.draw_point_cloud("point_cloud", points, color, size)
+
+    def set_bboxes(self, bboxes, show, show_box_surface = 1, show_id = 0, show_vel = 0):
+        # 输入的box是列表形式，下面需要转成box对象
+        if bboxes == []:
+            return
+        boxes = []
+        for b in bboxes:
+            boxes.append(LabelObj(b))
+        if show:
+            self.canvas.draw_box_line("bbox_line", boxes)
+            if show_box_surface:
+                self.canvas.draw_box_surface("bbox_surface", boxes)
+            if show_id:
+                self.canvas.draw_id_vel("text", boxes, show_id, show_vel)
+
+    def set_images(self, img, show, topic):
+        if show:
+            self.canvas2d.draw_image(topic, img)
+            self.canvas2d.update()
+
+    def add_img_view(self, topic):
+        self.canvas2d.create_view("add_2dview", topic)
+        self.canvas2d.creat_vis("add_image_vis", topic, topic)
 
     def show(self):
         self.ui.show()

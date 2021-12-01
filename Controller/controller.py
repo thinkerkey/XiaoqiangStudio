@@ -1,6 +1,8 @@
 from time import sleep
 
 import numpy
+from numpy.__config__ import show
+from numpy.lib.type_check import imag
 from Utils.point_cloud_utils import *
 from View.view import View
 from Model.model import Model
@@ -65,14 +67,20 @@ class Controller():
                     self.model.global_cfg['base_data_type'][data_type],
                     data_type,
                     need_topic)
+            if  data_type == "image":
+                self.view.add_img_view(need_topic)
+
 
     def point_callback(self, msg, topic):
         send_log_msg(NORMAL, "收到来自%s的point msg"%topic)
-        self.view.canvas.draw_point_cloud("point_cloud", msg["points"])
+        # self.view.canvas.draw_point_cloud("point_cloud", msg["points"])
+        self.view.set_point_cloud(msg["points"], show=1)
         print(msg.keys())
 
     def image_callback(self, msg, topic):
         send_log_msg(NORMAL, "收到来自%s的image msg"%topic)
+        # print(np.ndarray(msg['img']))
+        # self.view.set_images(np.array(msg['img']), show=1, topic=topic)
 
     def bbox_callback(self, msg, topic):
         send_log_msg(NORMAL, "收到来自%s的bbox msg"%topic)
@@ -84,14 +92,31 @@ class Controller():
 
     index = 0
     def button_clicked(self):
+        from vispy.io import read_png
+
         curr_index_str = str(self.index).zfill(6)
-        curr_bin_path = osp.join("data/point_cloud", curr_index_str + ".bin")
+        curr_bin_path = osp.join("/home/uisee/Workspace/ULab/UTracking/datasets/nuscenes/point_cloud", curr_index_str + ".bin")
         curr_label_path = osp.join("data/bbox_track", curr_index_str + ".txt")
-        curr_image_path = osp.join("data/image_CAM_FRONT", curr_index_str + ".jpg")
-        print(curr_bin_path)
+        try:
+            curr_text = np.loadtxt(curr_label_path)
+
+            self.view.set_bboxes(curr_text, show = 1, )
+        except:
+            print("empty")
+        curr_image1_path = osp.join("data/image_CAM_FRONT", curr_index_str + ".jpg")
+        # curr_image2_path = osp.join("data/image_CAM_BACK", curr_index_str + ".jpg")
+
+        img1 = read_png(curr_image1_path)
+        # img2 = read_png(curr_image2_path)
+        # print(img1.shape)
+        self.view.set_images(img1, show=1, topic="image1")
+        # self.view.set_images(img2, show=1, topic="image2")
+
         curr_points = read_bin(curr_bin_path)[0]
-        print(type(curr_points))
-        self.model.pub("points", {"points":curr_points})
+        self.view.set_point_cloud(curr_points, show=1)
+        # self.model.pub("points", {"points":curr_points})
+        # self.model.pub("image1", {"img":img1})
+        # self.model.pub("image2", {"img":img2})
         self.index += 1
 
     def monitor_timer(self):

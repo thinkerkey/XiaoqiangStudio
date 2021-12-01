@@ -132,6 +132,16 @@
            </item>
           </layout>
          </widget>
+         <widget class="QWidget" name="group_image_tab">
+          <attribute name="title">
+           <string>Image2D</string>
+          </attribute>
+          <layout class="QVBoxLayout" name="verticalLayout_8">
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_img"/>
+           </item>
+          </layout>
+         </widget>
         </widget>
        </item>
       </layout>
