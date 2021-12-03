@@ -73,7 +73,7 @@ class Canvas(scene.SceneCanvas):
 
 
     def add_2dview(self, view_name = "2d"):
-        self.view_panel[view_name] = self.grid.add_view(row=0, col=self.curr_col_image_view, margin=10,
+        self.view_panel[view_name] = self.grid.add_view(row=self.curr_col_image_view, col=0, margin=10,
                                     border_color=(1, 1, 1))
         self.view_panel[view_name].camera = scene.PanZoomCamera(aspect=1)
         self.view_panel[view_name].camera.flip = (0, 1, 0)
