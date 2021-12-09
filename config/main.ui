@@ -20,7 +20,7 @@
       <property name="currentIndex">
        <number>0</number>
       </property>
-      <widget class="QWidget" name="groupbox_displaysPage1" native="true">
+      <widget class="QWidget" name="groupbox_displaysPage1">
        <attribute name="title">
         <string>Displays</string>
        </attribute>
@@ -161,7 +161,7 @@
        <attribute name="title">
         <string>Tab 1</string>
        </attribute>
-       <layout class="QVBoxLayout" name="verticalLayout_4">
+       <layout class="QVBoxLayout" name="verticalLayout_4" stretch="7,1">
         <item>
          <widget class="QScrollArea" name="scrollArea_2">
           <property name="widgetResizable">
@@ -172,8 +172,8 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>236</width>
-             <height>638</height>
+             <width>266</width>
+             <height>553</height>
             </rect>
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_7">
@@ -186,6 +186,46 @@
             </item>
            </layout>
           </widget>
+         </widget>
+        </item>
+        <item>
+         <widget class="QFrame" name="frame_2">
+          <property name="frameShape">
+           <enum>QFrame::StyledPanel</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Raised</enum>
+          </property>
+          <layout class="QHBoxLayout" name="horizontalLayout_3">
+           <item>
+            <widget class="QPushButton" name="button_step_control">
+             <property name="text">
+              <string>STEP</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QCheckBox" name="checkbox_cycle">
+             <property name="text">
+              <string>Cycle</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLineEdit" name="text_cycle_term">
+             <property name="text">
+              <string>10</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="label_4">
+             <property name="text">
+              <string>HZ</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
          </widget>
         </item>
        </layout>
@@ -205,7 +245,7 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>236</width>
+             <width>266</width>
              <height>638</height>
             </rect>
            </property>

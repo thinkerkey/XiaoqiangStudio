@@ -1,8 +1,7 @@
-from time import sleep
 
-import numpy
-from numpy.__config__ import show
-from numpy.lib.type_check import imag
+import numpy as np
+from vispy.scene.visuals import Box
+
 from Utils.point_cloud_utils import *
 from View.view import View
 from Model.model import Model
@@ -24,6 +23,9 @@ class Controller():
         self.Timer.start(50)
         self.Timer.timeout.connect(self.monitor_timer)
 
+        self.cycle_send_timer = QTimer()
+
+
         self.index = 0
         self.signal_connect()
         send_log_msg(NORMAL, "欢迎来到 Xiaoqiang Studio~")
@@ -40,10 +42,26 @@ class Controller():
     def signal_connect(self):
         self.view.ui.pushButton.clicked.connect(self.button_clicked)
         self.view.ui.button_add_topic.clicked.connect(self.add_topic)
+        self.view.ui.button_step_control.clicked.connect(self.control_next_pub)
         self.view.ui.menu_theme.triggered.connect(self.change_theme)
         self.view.ui.tree_widget_for_display.itemChanged.connect(self.display_setting_changed)
         self.view.ui.tree_widget_for_display.clicked.connect(self.display_clicked)
         self.view.ui.need_sub_text.returnPressed.connect(self.add_topic)
+        self.view.ui.checkbox_cycle.toggled.connect(self.cycle_send_control)
+
+        self.cycle_send_timer.timeout.connect(self.control_next_pub)
+
+    def cycle_send_control(self, status):
+        if status:
+            hz = self.view.get_text_cycle_term()
+            self.cycle_send_timer.start(int(1000 / hz))
+            send_log_msg(NORMAL, "启动循环控制, 控制周期为%sHZ"%hz)
+        else:
+            self.cycle_send_timer.stop()
+            send_log_msg(NORMAL, "停止循环控制")
+
+    def control_next_pub(self):
+        self.model.pub("control", {"data": 1})
 
     def display_clicked(self, item):
         # print(item.parent())
@@ -82,8 +100,29 @@ class Controller():
         # print(np.ndarray(msg['img']))
         # self.view.set_images(np.array(msg['img']), show=1, topic=topic)
 
+    def cvt_box(self, box_list, b_type = None):
+        if len(box_list) == 0:
+            return np.array([])
+        else:
+            b1 = np.array(box_list)
+            if b_type is not None:
+                b1[:, 0] = b_type
+            return b1
+
     def bbox_callback(self, msg, topic):
         send_log_msg(NORMAL, "收到来自%s的bbox msg"%topic)
+        bboxes = msg["data"] + msg["data2"]
+
+        box_len = len(bboxes)
+        if box_len != 0:
+            x, y = bboxes[0][1], bboxes[0][2]
+            for i in range(box_len):
+                bboxes[i][1] -= x
+                bboxes[i][2] -= y
+
+
+
+        self.view.set_bboxes(bboxes, show = 1)
 
     def change_theme(self, theme):
         curr_theme = theme.text() + ".xml"

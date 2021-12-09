@@ -125,7 +125,7 @@ class View():
 
     def set_bboxes(self, bboxes, show, show_box_surface = 1, show_id = 0, show_vel = 0):
         # 输入的box是列表形式，下面需要转成box对象
-        if bboxes == []:
+        if len(bboxes) == 0:
             return
         boxes = []
         for b in bboxes:
@@ -136,6 +136,7 @@ class View():
                 self.canvas.draw_box_surface("bbox_surface", boxes)
             if show_id:
                 self.canvas.draw_id_vel("text", boxes, show_id, show_vel)
+        self.canvas.update()
 
     def set_images(self, img, show, topic):
         if show:
@@ -145,6 +146,10 @@ class View():
     def add_img_view(self, topic):
         self.canvas2d.create_view("add_2dview", topic)
         self.canvas2d.creat_vis("add_image_vis", topic, topic)
+
+    def get_text_cycle_term(self):
+        hz = self.ui.text_cycle_term.text()
+        return int(hz)
 
     def show(self):
         self.ui.show()

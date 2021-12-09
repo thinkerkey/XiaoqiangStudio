@@ -78,6 +78,9 @@ class LabelObj:
         self.length = 0
         self.dir = 0
         self.id = 0
+        self.conf = 0
+        self.vx = 0
+        self.vy = 0
 
         if line is not None:
             self.from_list(line)
@@ -94,20 +97,24 @@ class LabelObj:
         self.x = float(line[1])
         self.y = float(line[2])
         self.z = float(line[3])
-        self.height = float(line[4])
-        self.width  = float(line[5])
-        self.length = float(line[6])
-        self.dir = float(line[7])
-        #  self.id = int(line[8])
-        if (len(line) > 8):
-            self.id = float(line[8])
 
-        if (len(line) > 9):
-            self.vel = float(line[9])
-        if (len(line) > 13):
-            self.acc = float(line[13])
-        else:
-            self.acc = 0
+        self.width  = float(line[4])
+        self.length = float(line[5])
+        self.height = float(line[6])
+        self.dir = float(line[7])
+        self.conf = float(line[8])
+
+        self.vx = float(line[9])
+        self.vy = float(line[10])
+        #  self.id = int(line[8])
+        # if (len(line) > 11):
+        #     self.id = float(line[11])
+        # if (len(line) > 12):
+        #     self.vel = float(line[9])
+        # if (len(line) > 13):
+        #     self.acc = float(line[13])
+        # else:
+        #     self.acc = 0
 
     def from_str(self, line):
         line = line.strip().split()
