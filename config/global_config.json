@@ -27,6 +27,15 @@
             "show_box_surface": 1,
             "show_id": 0,
             "show_vel": 0
+        },
+        "XYcurve": {
+            "show": 1
+        },
+        "timeCurve": {
+            "show": 1
+        },
+        "text": {
+            "show": 1
         }
     },
     "label_map": {

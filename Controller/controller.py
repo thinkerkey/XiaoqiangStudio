@@ -30,6 +30,8 @@ class Controller():
         self.signal_connect()
         send_log_msg(NORMAL, "欢迎来到 Xiaoqiang Studio~")
         self.model.start()
+        self.show_text = ""
+        # self.view.set_show_text("你好,世界")
 
     def run(self):
         apply_stylesheet(self.app, theme=self.model.global_cfg['theme'])
@@ -40,7 +42,7 @@ class Controller():
 
 
     def signal_connect(self):
-        self.view.ui.pushButton.clicked.connect(self.button_clicked)
+        # self.view.ui.pushButton.clicked.connect(self.button_clicked)
         self.view.ui.button_add_topic.clicked.connect(self.add_topic)
         self.view.ui.button_step_control.clicked.connect(self.control_next_pub)
         self.view.ui.menu_theme.triggered.connect(self.change_theme)
@@ -92,13 +94,36 @@ class Controller():
     def point_callback(self, msg, topic):
         send_log_msg(NORMAL, "收到来自%s的point msg"%topic)
         # self.view.canvas.draw_point_cloud("point_cloud", msg["points"])
-        self.view.set_point_cloud(msg["points"], show=1)
-        print(msg.keys())
+        self.view.set_point_cloud(msg["data"], show=1)
 
     def image_callback(self, msg, topic):
         send_log_msg(NORMAL, "收到来自%s的image msg"%topic)
         # print(np.ndarray(msg['img']))
-        # self.view.set_images(np.array(msg['img']), show=1, topic=topic)
+        self.view.set_images(np.array(msg['data']), show=1, topic=topic)
+
+
+
+    def bbox_callback(self, msg, topic):
+        send_log_msg(NORMAL, "收到来自%s的bbox msg"%topic)
+        bboxes = msg["data"] # + msg["data2"]
+        self.view.set_bboxes(bboxes, show = 1)
+
+    def text_callback(self, msg, topic):
+        send_log_msg(NORMAL, "收到来自%s的text msg"%topic)
+        lines = ""
+        for key, value in msg.items():
+            lines += key + " :\t" + str(value) + "\n"
+
+        self.show_text = lines
+
+
+
+    def XYcurve_callback(self, msg, topic):
+        send_log_msg(NORMAL, "收到来自%s的XYcurve msg"%topic)
+
+    def timeCurve_callback(self, msg, topic):
+        send_log_msg(NORMAL, "收到来自%s的timeCurve msg"%topic)
+        self.view.set_show_text("你好,世界")
 
     def cvt_box(self, box_list, b_type = None):
         if len(box_list) == 0:
@@ -108,21 +133,6 @@ class Controller():
             if b_type is not None:
                 b1[:, 0] = b_type
             return b1
-
-    def bbox_callback(self, msg, topic):
-        send_log_msg(NORMAL, "收到来自%s的bbox msg"%topic)
-        bboxes = msg["data"] + msg["data2"]
-
-        box_len = len(bboxes)
-        if box_len != 0:
-            x, y = bboxes[0][1], bboxes[0][2]
-            for i in range(box_len):
-                bboxes[i][1] -= x
-                bboxes[i][2] -= y
-
-
-
-        self.view.set_bboxes(bboxes, show = 1)
 
     def change_theme(self, theme):
         curr_theme = theme.text() + ".xml"
@@ -162,6 +172,7 @@ class Controller():
         get_msg = ret_log_msg()
         if get_msg != []:
             self.view.display_append_msg_list(get_msg)
+        self.view.set_show_text(self.show_text)
 
     def sigint_handler(self, signum = None, frame = None):
         self.model.save_global_cfg_when_close()

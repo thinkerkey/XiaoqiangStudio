@@ -1,12 +1,13 @@
-from selectors import SelectorKey
 from PySide2.QtUiTools import QUiLoader
-from PySide2.QtWidgets import QApplication, QSplitter, QTreeWidgetItem
+from PySide2.QtWidgets import QApplication, QSplitter, QTreeWidgetItem, QCheckBox
 from PySide2.QtCore import QTimer, Qt, QModelIndex
 import time
 from Utils.common_utils import *
 from View.uviz import Canvas
 from log_sys import send_log_msg
 from .mov_obj import LabelObj
+from PySide2.QtCharts import QtCharts
+
 
 class View():
     '''
@@ -40,9 +41,58 @@ class View():
                                 self.ui.tabwidget_main],
                             [4, 2],
                             self.ui.groupbox_mainwindow.layout())
+        self.set_qspilter("setting",
+                            Qt.Vertical,
+                            [self.ui.timeCurveFrame,
+                                self.ui.XyCurveFrame,
+                                self.ui.control_frame],
+                            [5, 5, 1],
+                            self.ui.tab_setting_1.layout())
         self.child_tree_item = {}
         self.child2_tree_item = {}
+        self.charts_lines = {}
+        self.chart_view = {}
+        self.axis_x = {}
+        self.axis_y = {}
+        self.chart = {}
+        self.chart_check_box = {}
         self.ui.tree_widget_for_display.setColumnWidth(0,150)
+        self.add_chart_view("TimeCurve", self.ui.time_curve_frame.layout())
+        self.add_chart_view("XYCurve", self.ui.xy_curve_frame.layout())
+        self.add_chart_lines("_", "TimeCurve")
+        self.add_chart_lines("_", "XYCurve")
+
+    def add_chart_view(self, chart_name, layout):
+        self.chart[chart_name] = QtCharts.QChart()
+        self.chart[chart_name].setTitle(chart_name)
+        self.axis_x[chart_name] = QtCharts.QValueAxis()
+        # self.axis_x[chart_name].setLabelFormat('%.1f')
+        self.axis_x[chart_name].setTitleText('frame')
+        self.axis_x[chart_name].setTickCount(11)
+        self.axis_x[chart_name].setMinorTickCount(4)
+        self.chart[chart_name].addAxis(self.axis_x[chart_name], Qt.AlignBottom)
+        self.axis_y[chart_name] = QtCharts.QValueAxis()
+        # self.axis_y[chart_name].setLabelFormat('%.1f')
+        self.axis_y[chart_name].setTitleText('Y')
+        self.chart[chart_name].addAxis(self.axis_y[chart_name], Qt.AlignLeft)
+        self.chart_view[chart_name] = QtCharts.QChartView(self.chart[chart_name], self.ui)
+        layout.addWidget(self.chart_view[chart_name])
+
+    def add_chart_lines(self, line_name, parent_name):
+        self.charts_lines[line_name] = QtCharts.QLineSeries()
+        self.charts_lines[line_name].setName(line_name)
+        self.chart[parent_name].addSeries(self.charts_lines[line_name])
+        self.charts_lines[line_name].attachAxis(self.axis_x[parent_name])
+        self.charts_lines[line_name].attachAxis(self.axis_y[parent_name])
+
+    def add_chart_checkbox(self, box_name, chart_type):
+        self.chart_check_box[box_name] = QCheckBox(box_name)
+        self.chart_check_box[box_name].setCheckState(Qt.Checked)
+        if chart_type == "XYCurve":
+            self.ui.xy_checkbox_area.layout().addWidget(self.chart_check_box[box_name])
+        else:
+            self.ui.time_checkbox_area.layout().addWidget(self.chart_check_box[box_name])
+
 
     def struct_canvas_init(self, cfg_dict:dict):
         for key, results in cfg_dict.items():
@@ -126,6 +176,7 @@ class View():
     def set_bboxes(self, bboxes, show, show_box_surface = 1, show_id = 0, show_vel = 0):
         # 输入的box是列表形式，下面需要转成box对象
         if len(bboxes) == 0:
+            self.canvas.update()
             return
         boxes = []
         for b in bboxes:
@@ -150,6 +201,9 @@ class View():
     def get_text_cycle_term(self):
         hz = self.ui.text_cycle_term.text()
         return int(hz)
+
+    def set_show_text(self, text):
+        self.ui.textBrowser.setText(text)
 
     def show(self):
         self.ui.show()
