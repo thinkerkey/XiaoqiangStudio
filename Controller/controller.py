@@ -1,7 +1,5 @@
 
 import numpy as np
-from vispy.scene.visuals import Box
-
 from Utils.point_cloud_utils import *
 from View.view import View
 from Model.model import Model

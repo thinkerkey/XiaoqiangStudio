@@ -13,6 +13,10 @@
   <property name="windowTitle">
    <string>Xiaoqiang Studio</string>
   </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>config/xshow.ico</normaloff>config/xshow.ico</iconset>
+  </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QHBoxLayout" name="horizontalLayout" stretch="1,2,1">
     <item>
@@ -180,7 +184,7 @@
           <property name="frameShadow">
            <enum>QFrame::Raised</enum>
           </property>
-          <layout class="QVBoxLayout" name="verticalLayout_8" stretch=""/>
+          <layout class="QVBoxLayout" name="verticalLayout_8"/>
          </widget>
         </item>
         <item>
@@ -191,7 +195,7 @@
           <property name="frameShadow">
            <enum>QFrame::Raised</enum>
           </property>
-          <layout class="QVBoxLayout" name="verticalLayout_11" stretch=""/>
+          <layout class="QVBoxLayout" name="verticalLayout_11"/>
          </widget>
         </item>
         <item>
