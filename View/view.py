@@ -55,28 +55,46 @@ class View():
         self.axis_x = {}
         self.axis_y = {}
         self.chart = {}
+        self.chart_x_min = {}
+        self.chart_x_max = {}
+        self.chart_y_min = {}
+        self.chart_y_max = {}
         self.chart_check_box = {}
         self.ui.tree_widget_for_display.setColumnWidth(0,150)
-        self.add_chart_view("TimeCurve", self.ui.time_curve_frame.layout())
-        self.add_chart_view("XYCurve", self.ui.xy_curve_frame.layout())
+        self.add_chart_view("TimeCurve", self.ui.timeCurveFrame.layout())
+        self.add_chart_view("XYCurve", self.ui.XyCurveFrame.layout())
         self.add_chart_lines("_", "TimeCurve")
         self.add_chart_lines("_", "XYCurve")
+        self.frame_index = 0
+
 
     def add_chart_view(self, chart_name, layout):
         self.chart[chart_name] = QtCharts.QChart()
         self.chart[chart_name].setTitle(chart_name)
         self.axis_x[chart_name] = QtCharts.QValueAxis()
         # self.axis_x[chart_name].setLabelFormat('%.1f')
-        self.axis_x[chart_name].setTitleText('frame')
-        self.axis_x[chart_name].setTickCount(11)
-        self.axis_x[chart_name].setMinorTickCount(4)
+        self.axis_x[chart_name].setTitleText('X')
+        # self.axis_x[chart_name].setTickCount(11)
+        # self.axis_x[chart_name].setMinorTickCount(4)
         self.chart[chart_name].addAxis(self.axis_x[chart_name], Qt.AlignBottom)
         self.axis_y[chart_name] = QtCharts.QValueAxis()
         # self.axis_y[chart_name].setLabelFormat('%.1f')
         self.axis_y[chart_name].setTitleText('Y')
         self.chart[chart_name].addAxis(self.axis_y[chart_name], Qt.AlignLeft)
+
+        self.chart_x_min[chart_name] = 0
+        self.chart_x_max[chart_name] = 1
+        self.chart_y_min[chart_name] = 0
+        self.chart_y_max[chart_name] = 1
+        self.set_chart_scale(chart_name)
         self.chart_view[chart_name] = QtCharts.QChartView(self.chart[chart_name], self.ui)
         layout.addWidget(self.chart_view[chart_name])
+
+    def set_chart_scale(self, chart_name):
+        self.chart[chart_name].axisX().setRange(self.chart_x_min[chart_name] - 0.5,
+                                                    self.chart_x_max[chart_name] + 0.5)
+        self.chart[chart_name].axisY().setRange(self.chart_y_min[chart_name] - 0.5,
+                                                    self.chart_y_max[chart_name] + 0.5)
 
     def add_chart_lines(self, line_name, parent_name):
         self.charts_lines[line_name] = QtCharts.QLineSeries()
@@ -92,6 +110,38 @@ class View():
             self.ui.xy_checkbox_area.layout().addWidget(self.chart_check_box[box_name])
         else:
             self.ui.time_checkbox_area.layout().addWidget(self.chart_check_box[box_name])
+
+    def add_value_for_timecurve(self, line_name, value, data_type = "TimeCurve"):
+        if self.frame_index < self.chart_x_min[data_type]:
+            self.chart_x_min[data_type] = self.frame_index
+
+        if self.frame_index > self.chart_x_max[data_type]:
+            self.chart_x_max[data_type] = self.frame_index
+
+        if value < self.chart_y_min[data_type]:
+            self.chart_y_min[data_type] = value
+
+        if value > self.chart_y_max[data_type]:
+            self.chart_y_max[data_type] = value
+        self.set_chart_scale(data_type)
+        self.charts_lines[line_name].append(self.frame_index, value)
+        self.frame_index += 1
+
+
+    def add_value_for_xycurve(self, line_name, value, data_type = "XYCurve"):
+        if value[0] < self.chart_x_min[data_type]:
+            self.chart_x_min[data_type] = value[0]
+
+        if value[0] > self.chart_x_max[data_type]:
+            self.chart_x_max[data_type] = value[0]
+
+        if  value[1] < self.chart_y_min[data_type]:
+            self.chart_y_min[data_type] =  value[1]
+
+        if  value[1] > self.chart_y_max[data_type]:
+            self.chart_y_max[data_type] =  value[1]
+        self.set_chart_scale(data_type)
+        self.charts_lines[line_name].append(value[0], value[1])
 
 
     def struct_canvas_init(self, cfg_dict:dict):
@@ -113,7 +163,7 @@ class View():
                             factor_list,
                             layout_set):
         # Qt.Horizontal or v
-        self.spliter_dict[spliter_name] = QSplitter(spliter_dir)
+        self.spliter_dict[spliter_name] = QSplitter(spliter_dir)        
 
         for w in widget_list:
             self.spliter_dict[spliter_name].addWidget(w)

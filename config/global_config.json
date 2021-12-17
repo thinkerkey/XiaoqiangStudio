@@ -28,10 +28,10 @@
             "show_id": 0,
             "show_vel": 0
         },
-        "XYcurve": {
+        "XYCurve": {
             "show": 1
         },
-        "timeCurve": {
+        "TimeCurve": {
             "show": 1
         },
         "text": {

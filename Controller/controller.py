@@ -24,11 +24,9 @@ class Controller():
         self.Timer.timeout.connect(self.monitor_timer)
 
         self.cycle_send_timer = QTimer()
-
-
         self.index = 0
         self.signal_connect()
-        send_log_msg(NORMAL, "欢迎来到 Xiaoqiang Studio~")
+        send_log_msg(NORMAL, "Xiaoqiang Studio. Do Nothing, Show Everything!")
         self.model.start()
         self.show_text = ""
         # self.view.set_show_text("你好,世界")
@@ -77,6 +75,8 @@ class Controller():
         need_topic = self.view.get_sub_topic_text()
         if need_topic == "":
             send_log_msg(ERROR, "请填写需要订阅的话题")
+        elif need_topic in self.view.child_tree_item.keys():
+            send_log_msg(ERROR, "该话题已经订阅过")
         else:
             data_type = self.view.get_data_type_text()
             fun_name = data_type + "_callback"
@@ -89,6 +89,9 @@ class Controller():
                     need_topic)
             if  data_type == "image":
                 self.view.add_img_view(need_topic)
+            elif "Curve" in data_type:
+                self.view.add_chart_lines(need_topic, data_type)
+                # self.view.add_chart_checkbox(need_topic, data_type)
 
 
     def point_callback(self, msg, topic):
@@ -118,12 +121,13 @@ class Controller():
 
 
 
-    def XYcurve_callback(self, msg, topic):
+    def XYCurve_callback(self, msg, topic):
         send_log_msg(NORMAL, "收到来自%s的XYcurve msg"%topic)
+        self.view.add_value_for_xycurve(topic, msg["data"])
 
-    def timeCurve_callback(self, msg, topic):
+    def TimeCurve_callback(self, msg, topic):
         send_log_msg(NORMAL, "收到来自%s的timeCurve msg"%topic)
-        self.view.set_show_text("你好,世界")
+        self.view.add_value_for_timecurve(topic, msg["data"])
 
     def cvt_box(self, box_list, b_type = None):
         if len(box_list) == 0:

@@ -135,7 +135,7 @@
        <item>
         <widget class="QTabWidget" name="tabwidget_main">
          <property name="currentIndex">
-          <number>1</number>
+          <number>0</number>
          </property>
          <widget class="QWidget" name="tab_3">
           <attribute name="title">
@@ -180,37 +180,7 @@
           <property name="frameShadow">
            <enum>QFrame::Raised</enum>
           </property>
-          <layout class="QVBoxLayout" name="verticalLayout_8" stretch="5,1">
-           <item>
-            <widget class="QFrame" name="time_curve_frame">
-             <property name="frameShape">
-              <enum>QFrame::StyledPanel</enum>
-             </property>
-             <property name="frameShadow">
-              <enum>QFrame::Raised</enum>
-             </property>
-             <layout class="QVBoxLayout" name="verticalLayout_7"/>
-            </widget>
-           </item>
-           <item>
-            <widget class="QScrollArea" name="time_label_area">
-             <property name="widgetResizable">
-              <bool>true</bool>
-             </property>
-             <widget class="QWidget" name="time_checkbox_area">
-              <property name="geometry">
-               <rect>
-                <x>0</x>
-                <y>0</y>
-                <width>246</width>
-                <height>73</height>
-               </rect>
-              </property>
-              <layout class="QGridLayout" name="gridLayout_2"/>
-             </widget>
-            </widget>
-           </item>
-          </layout>
+          <layout class="QVBoxLayout" name="verticalLayout_8" stretch=""/>
          </widget>
         </item>
         <item>
@@ -221,37 +191,7 @@
           <property name="frameShadow">
            <enum>QFrame::Raised</enum>
           </property>
-          <layout class="QVBoxLayout" name="verticalLayout_11" stretch="5,1">
-           <item>
-            <widget class="QFrame" name="xy_curve_frame">
-             <property name="frameShape">
-              <enum>QFrame::StyledPanel</enum>
-             </property>
-             <property name="frameShadow">
-              <enum>QFrame::Raised</enum>
-             </property>
-             <layout class="QVBoxLayout" name="verticalLayout_10"/>
-            </widget>
-           </item>
-           <item>
-            <widget class="QScrollArea" name="xy_label_area">
-             <property name="widgetResizable">
-              <bool>true</bool>
-             </property>
-             <widget class="QWidget" name="xy_checkbox_area">
-              <property name="geometry">
-               <rect>
-                <x>0</x>
-                <y>0</y>
-                <width>246</width>
-                <height>73</height>
-               </rect>
-              </property>
-              <layout class="QGridLayout" name="gridLayout_3"/>
-             </widget>
-            </widget>
-           </item>
-          </layout>
+          <layout class="QVBoxLayout" name="verticalLayout_11" stretch=""/>
          </widget>
         </item>
         <item>
