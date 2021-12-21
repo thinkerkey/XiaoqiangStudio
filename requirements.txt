@@ -1,0 +1,9 @@
+numpy==1.19.5
+open3d==0.9.0.0
+PySide2==5.15.2
+PyYAML==6.0
+qt_material==2.8.13
+redis==4.0.2
+scipy==1.5.4
+trimesh==2.35.39
+vispy==0.9.3
