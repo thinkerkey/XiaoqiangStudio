@@ -39,8 +39,8 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>284</width>
-             <height>562</height>
+             <width>280</width>
+             <height>569</height>
             </rect>
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_6">
@@ -250,7 +250,7 @@
        <attribute name="title">
         <string>Tab 2</string>
        </attribute>
-       <layout class="QVBoxLayout" name="verticalLayout_5">
+       <layout class="QVBoxLayout" name="verticalLayout_5" stretch="1,1">
         <item>
          <widget class="QScrollArea" name="scrollArea_3">
           <property name="widgetResizable">
@@ -261,55 +261,96 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>266</width>
-             <height>638</height>
+             <width>252</width>
+             <height>318</height>
             </rect>
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_7">
             <item>
-             <layout class="QHBoxLayout" name="horizontalLayout_5">
-              <item>
-               <widget class="QLineEdit" name="lineEdit"/>
+             <layout class="QGridLayout" name="gridLayout_3">
+              <item row="2" column="1">
+               <widget class="QLineEdit" name="lineEdit_2"/>
               </item>
-              <item>
-               <widget class="QPushButton" name="pushButton">
-                <property name="text">
-                 <string>PushButton</string>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
-            <item>
-             <layout class="QHBoxLayout" name="horizontalLayout_6">
-              <item>
+              <item row="2" column="0">
                <widget class="QPushButton" name="pushButton_2">
                 <property name="text">
                  <string>&lt;</string>
                 </property>
                </widget>
               </item>
-              <item>
-               <widget class="QLineEdit" name="lineEdit_2"/>
+              <item row="1" column="0">
+               <widget class="QLabel" name="label_6">
+                <property name="text">
+                 <string>总帧数：</string>
+                </property>
+               </widget>
               </item>
-              <item>
+              <item row="2" column="2">
                <widget class="QPushButton" name="pushButton_3">
                 <property name="text">
                  <string>&gt;</string>
                 </property>
                </widget>
               </item>
+              <item row="1" column="1">
+               <widget class="QLabel" name="label_7">
+                <property name="text">
+                 <string>N/A</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="2">
+               <widget class="QPushButton" name="pushButton">
+                <property name="text">
+                 <string>选择点云</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="0" colspan="2">
+               <widget class="QLineEdit" name="lineEdit"/>
+              </item>
              </layout>
             </item>
             <item>
-             <widget class="QSlider" name="horizontalSlider">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-             </widget>
+             <layout class="QGridLayout" name="gridLayout_2">
+              <item row="0" column="0">
+               <widget class="QPushButton" name="pushButton_4">
+                <property name="text">
+                 <string>autoplay</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="1">
+               <widget class="QLineEdit" name="lineEdit_3"/>
+              </item>
+              <item row="0" column="2">
+               <widget class="QLabel" name="label_5">
+                <property name="text">
+                 <string>ms</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="0" colspan="2">
+               <widget class="QSlider" name="horizontalSlider">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+               </widget>
+              </item>
+             </layout>
             </item>
            </layout>
           </widget>
+         </widget>
+        </item>
+        <item>
+         <widget class="QFrame" name="frame_2">
+          <property name="frameShape">
+           <enum>QFrame::StyledPanel</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Raised</enum>
+          </property>
          </widget>
         </item>
        </layout>
@@ -324,7 +365,7 @@
      <x>0</x>
      <y>0</y>
      <width>1118</width>
-     <height>31</height>
+     <height>28</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu">

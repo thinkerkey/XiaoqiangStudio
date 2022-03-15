@@ -1,6 +1,6 @@
 from time import time
 from Utils.common_utils import *
-from MsgManger.manager import NodeRegister
+from MsgManager.manager import NodeRegister
 from PySide2.QtCore import QThread
 import time
 
