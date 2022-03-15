@@ -1,9 +1,11 @@
 import os
 import struct
 import numpy as np
-import open3d as o3d
+# import open3d as o3d
 from .navi_state import GPSstate, NaviState, CANstate
 from scipy.spatial.transform import Rotation
+import pypcd
+
 
 def crop_cloud_height(points, min=-0.5, max=4, return_idx=False):
     idx = (points[:, 2] > min) & (points[:, 2] < max)
@@ -62,13 +64,14 @@ def get_metadata(pcd_path):
     return veh_name, framework
 
 def read_pcd(path):
-    pp = o3d.io.read_point_cloud(path)
-    points = np.asarray(pp.points)
+    # pp = o3d.io.read_point_cloud(path)
+    # points = np.asarray(pp.points)
 
-    if pp.has_colors():
-        colors = np.asarray(pp.colors)
-        return (points, colors)
-    return (points, None)
+    # if pp.has_colors():
+    #     colors = np.asarray(pp.colors)
+    #     return (points, colors)
+    points = pypcd.PointCloud.from_path(path)
+    return (points.pc_data, None)
 
 def read_bin(path):
     points = np.fromfile(path, dtype=np.float32).reshape(-1, 5)[..., :3]
