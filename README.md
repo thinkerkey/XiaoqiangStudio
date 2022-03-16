@@ -1,6 +1,6 @@
 sudo apt-get install redis-server
+
 pip install redis
-git clone git@gitlab.uisee.ai:cxq10490/MsgManager.git
 
 ```python
 from MsgManager.manager import NodeRegister
